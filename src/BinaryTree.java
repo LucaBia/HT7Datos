@@ -40,6 +40,13 @@ public class BinaryTree<E>
         return left;
     }
 
+    public BinaryTree<E> right()
+    // post: returns reference to (possibly empty) left subtree
+    // post: returns reference to (possibly empty) left subtree
+    {
+        return right;
+    }
+
     public BinaryTree<E> parent(){
         // post: returns reference to parent node, or null
         return parent;
