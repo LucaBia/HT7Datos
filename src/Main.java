@@ -9,8 +9,7 @@ import java.util.stream.Stream;
 public class Main {
     public static void main(String[] args) {
         Scanner read = new Scanner(System.in);
-        ArrayList lstNodos = new ArrayList();
-        BinaryTree diccionarioBT = new BinaryTree();
+        ArrayList<Association> lstNodos = new ArrayList();
         String archivoNombre;
 
         System.out.println("Ingrese el nombre del archivo");
@@ -39,9 +38,16 @@ public class Main {
             lstNodos.add(new Association<String, String>(traduc.get(0), traduc.get(1)));
         }
 
-        for (int n = 0; n < lstNodos.size(); n++) {
+        BinaryTree<Association> diccionarioBT = new BinaryTree<Association>(lstNodos.get(0));
+
+        BinaryTree<Association> btActual = diccionarioBT;
+
+        for (int n = 1; n < lstNodos.size(); n++) {
             System.out.println(lstNodos.get(n));
 
+            if (btActual.left == null) {
+
+            }
 
         }
     }
