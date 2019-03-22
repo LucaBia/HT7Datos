@@ -38,17 +38,35 @@ public class Main {
             lstNodos.add(new Association<String, String>(traduc.get(0), traduc.get(1)));
         }
 
-        BinaryTree<Association> diccionarioBT = new BinaryTree<Association>(lstNodos.get(0));
+        BinaryTree<Association> diccionarioBTraiz = new BinaryTree<Association>(lstNodos.get(0));
 
-        BinaryTree<Association> btActual = diccionarioBT;
+        BinaryTree<Association> btActual = diccionarioBTraiz;
 
         for (int n = 1; n < lstNodos.size(); n++) {
-            System.out.println(lstNodos.get(n));
+            //System.out.println(lstNodos.get(n));
 
-            if (btActual.left == null) {
+            System.out.println("Padre: " + btActual.value());
 
+            if (btActual.left().value() == null) {
+                btActual.setLeft(new BinaryTree<>(lstNodos.get(n)));
+                System.out.println("Izquierdo");
+                System.out.println(btActual.left().value());
+            } else if (btActual.right().value() == null) {
+                btActual.setRight(new BinaryTree<>(lstNodos.get(n)));
+                System.out.println("Derecho");
+                System.out.println(btActual.right().value());
+            }
+
+            if (!btActual.isEmpty()) {
+                if (btActual.left().isEmpty()) {
+                    btActual = btActual.left();
+                } else if (btActual.right().isEmpty()) {
+                    btActual = btActual.right();
+                }
             }
 
         }
+
+        //diccionarioBTraiz.recorrerInOrder();
     }
 }

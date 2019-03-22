@@ -5,7 +5,7 @@ public class BinaryTree<E>
 
     protected E val; // value associated with node
     protected BinaryTree<E> parent; // parent of node
-    protected BinaryTree<E> left, right; // children of node
+    private BinaryTree<E> left, right; // children of node
 
     public BinaryTree()
     // post: constructor that generates an empty node
@@ -107,10 +107,21 @@ public class BinaryTree<E>
     /* Function to check if tree is empty */
     public boolean isEmpty()
     {
-        return val == null && parent == null && left == null && right == null;
-
+        return val == null && left == null && right == null;
     }
 
+    public void recorrerInOrder() {
+        inOrder(this);
+    }
 
+    public void inOrder(BinaryTree bt) {
+        if (bt.isEmpty()) {
+            return;
+        }
+
+        inOrder(bt.left());
+        System.out.println(value());
+        inOrder(bt.right());
+    }
 
 }
