@@ -40,33 +40,32 @@ public class Main {
 
         BinaryTree<Association> diccionarioBTraiz = new BinaryTree<Association>(lstNodos.get(0));
 
-        BinaryTree<Association> btActual = diccionarioBTraiz;
-
-        for (int n = 1; n < lstNodos.size(); n++) {
-            //System.out.println(lstNodos.get(n));
-
-            System.out.println("Padre: " + btActual.value());
-
-            if (btActual.left().value() == null) {
-                btActual.setLeft(new BinaryTree<>(lstNodos.get(n)));
-                System.out.println("Izquierdo");
-                System.out.println(btActual.left().value());
-            } else if (btActual.right().value() == null) {
-                btActual.setRight(new BinaryTree<>(lstNodos.get(n)));
-                System.out.println("Derecho");
-                System.out.println(btActual.right().value());
+        for (int n = 0; n < lstNodos.size(); n++) {
+            if ((n+1) < lstNodos.size()) {
+                BinaryTree<Association> btSiguiente = new BinaryTree<>(lstNodos.get(n+1));
+                agregar(diccionarioBTraiz, btSiguiente);
             }
-
-            if (!btActual.isEmpty()) {
-                if (btActual.left().isEmpty()) {
-                    btActual = btActual.left();
-                } else if (btActual.right().isEmpty()) {
-                    btActual = btActual.right();
-                }
-            }
-
         }
 
-        //diccionarioBTraiz.recorrerInOrder();
+        System.out.println();
+        diccionarioBTraiz.inOrder(diccionarioBTraiz);
+    }
+
+    public static void agregar(BinaryTree btActual, BinaryTree btSiguiente) {
+
+        if (btActual.value().toString().compareTo(btSiguiente.value().toString()) > 0) {
+            if (btActual.left().value() == null) {
+                btActual.setLeft(btSiguiente);
+            } else {
+                agregar(btActual.left(), btSiguiente);
+            }
+        } else if (btActual.value().toString().compareTo(btSiguiente.value().toString()) < 0) {
+            if (btActual.right().value() == null) {
+                btActual.setRight(btSiguiente);
+            } else {
+                agregar(btActual.right(), btSiguiente);
+            }
+        }
+
     }
 }
