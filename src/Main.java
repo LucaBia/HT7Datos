@@ -12,10 +12,9 @@ public class Main {
         ArrayList<Association> lstNodos = new ArrayList();
         String archivoNombre;
 
+        //Para leer el archivo
         System.out.println("Ingrese el nombre del archivo");
         archivoNombre = read.next();
-
-        //Para leer el archivo
         ArrayList<String> archivo = new ArrayList<>();
         try {
             Stream<String> lines = Files.lines(
@@ -47,8 +46,25 @@ public class Main {
             }
         }
 
+        //IMPRIMIR IN ORDER
         System.out.println();
         diccionarioBTraiz.inOrder(diccionarioBTraiz);
+
+        //TRADUCCION DE ARCHIVO
+
+        //Para leer el archivo
+        System.out.println("Ingrese el nombre del archivo");
+        archivoNombre = read.next();
+        archivo = new ArrayList<>();
+        try {
+            Stream<String> lines = Files.lines(
+                    Paths.get(archivoNombre + ".txt"),
+                    StandardCharsets.UTF_8
+            );
+            lines.forEach(archivo::add);
+        } catch (IOException e ){
+            System.out.println("Ha ocurrido un error");
+        }
     }
 
     public static void agregar(BinaryTree btActual, BinaryTree btSiguiente) {
