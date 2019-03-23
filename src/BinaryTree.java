@@ -91,4 +91,9 @@ public class BinaryTree<E> {
         }
     }
 
+    public String buscar(String ingles) {
+
+        return null;
+    }
+
 }

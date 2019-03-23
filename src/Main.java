@@ -34,7 +34,7 @@ public class Main {
                 traduc.add(palabra);
             }
 
-            lstNodos.add(new Association<String, String>(traduc.get(0), traduc.get(1)));
+            lstNodos.add(new Association<String, String>(traduc.get(0).toLowerCase(), traduc.get(1).toLowerCase()));
         }
 
         BinaryTree<Association> diccionarioBTraiz = new BinaryTree<Association>(lstNodos.get(0));
@@ -53,6 +53,7 @@ public class Main {
         //TRADUCCION DE ARCHIVO
 
         //Para leer el archivo
+        System.out.println();
         System.out.println("Ingrese el nombre del archivo");
         archivoNombre = read.next();
         archivo = new ArrayList<>();
@@ -65,6 +66,23 @@ public class Main {
         } catch (IOException e ){
             System.out.println("Ha ocurrido un error");
         }
+
+        String traduccion = "";
+        for (String linea : archivo) {
+            String lineaClean = linea.replaceAll("\\.","");
+
+            for (String palabra : lineaClean.trim().split("\\s+")) {
+                if (diccionarioBTraiz.buscar(palabra) == null) {
+                    traduccion += "*"+palabra+"* ";
+                } else {
+                    traduccion += diccionarioBTraiz.buscar(palabra) + " ";
+                }
+            }
+            traduccion += "\n";
+        }
+
+        System.out.println(traduccion);
+
     }
 
     public static void agregar(BinaryTree btActual, BinaryTree btSiguiente) {
