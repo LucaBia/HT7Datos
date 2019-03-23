@@ -12,10 +12,9 @@ public class Main {
         ArrayList<Association> lstNodos = new ArrayList();
         String archivoNombre;
 
+        //Para leer el archivo
         System.out.println("Ingrese el nombre del archivo");
         archivoNombre = read.next();
-
-        //Para leer el archivo
         ArrayList<String> archivo = new ArrayList<>();
         try {
             Stream<String> lines = Files.lines(
@@ -35,38 +34,73 @@ public class Main {
                 traduc.add(palabra);
             }
 
-            lstNodos.add(new Association<String, String>(traduc.get(0), traduc.get(1)));
+            lstNodos.add(new Association<String, String>(traduc.get(0).toLowerCase(), traduc.get(1).toLowerCase()));
         }
 
         BinaryTree<Association> diccionarioBTraiz = new BinaryTree<Association>(lstNodos.get(0));
 
-        BinaryTree<Association> btActual = diccionarioBTraiz;
-
-        for (int n = 1; n < lstNodos.size(); n++) {
-            //System.out.println(lstNodos.get(n));
-
-            System.out.println("Padre: " + btActual.value());
-
-            if (btActual.left().value() == null) {
-                btActual.setLeft(new BinaryTree<>(lstNodos.get(n)));
-                System.out.println("Izquierdo");
-                System.out.println(btActual.left().value());
-            } else if (btActual.right().value() == null) {
-                btActual.setRight(new BinaryTree<>(lstNodos.get(n)));
-                System.out.println("Derecho");
-                System.out.println(btActual.right().value());
+        for (int n = 0; n < lstNodos.size(); n++) {
+            if ((n+1) < lstNodos.size()) {
+                BinaryTree<Association> btSiguiente = new BinaryTree<>(lstNodos.get(n+1));
+                agregar(diccionarioBTraiz, btSiguiente);
             }
-
-            if (!btActual.isEmpty()) {
-                if (btActual.left().isEmpty()) {
-                    btActual = btActual.left();
-                } else if (btActual.right().isEmpty()) {
-                    btActual = btActual.right();
-                }
-            }
-
         }
 
-        //diccionarioBTraiz.recorrerInOrder();
+        //IMPRIMIR IN ORDER
+        System.out.println();
+//        diccionarioBTraiz.inOrder(diccionarioBTraiz);
+        System.out.println(diccionarioBTraiz.inOrder(diccionarioBTraiz));
+
+        //TRADUCCION DE ARCHIVO
+
+        //Para leer el archivo
+        System.out.println();
+        System.out.println("Ingrese el nombre del archivo");
+        archivoNombre = read.next();
+        archivo = new ArrayList<>();
+        try {
+            Stream<String> lines = Files.lines(
+                    Paths.get(archivoNombre + ".txt"),
+                    StandardCharsets.UTF_8
+            );
+            lines.forEach(archivo::add);
+        } catch (IOException e ){
+            System.out.println("Ha ocurrido un error");
+        }
+
+        String traduccion = "";
+        for (String linea : archivo) {
+            String lineaClean = linea.replaceAll("\\.","");
+
+            for (String palabra : lineaClean.trim().split("\\s+")) {
+                if (diccionarioBTraiz.buscar(palabra) == null) {
+                    traduccion += "*"+palabra+"* ";
+                } else {
+                    traduccion += diccionarioBTraiz.buscar(palabra) + " ";
+                }
+            }
+            traduccion += "\n";
+        }
+
+        System.out.println(traduccion);
+
+    }
+
+    public static void agregar(BinaryTree btActual, BinaryTree btSiguiente) {
+
+        if (btActual.value().toString().compareTo(btSiguiente.value().toString()) > 0) {
+            if (btActual.left().value() == null) {
+                btActual.setLeft(btSiguiente);
+            } else {
+                agregar(btActual.left(), btSiguiente);
+            }
+        } else if (btActual.value().toString().compareTo(btSiguiente.value().toString()) < 0) {
+            if (btActual.right().value() == null) {
+                btActual.setRight(btSiguiente);
+            } else {
+                agregar(btActual.right(), btSiguiente);
+            }
+        }
+
     }
 }
