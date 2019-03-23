@@ -83,17 +83,30 @@ public class BinaryTree<E> {
         return val == null && left == null && right == null;
     }
 
-    public void inOrder(BinaryTree bt) {
-        if (bt.value() != null) {
-            inOrder(bt.left());
-            System.out.println(bt.value());
-            inOrder(bt.right());
+    public String inOrder(BinaryTree bt) {
+        String arbol = "";
+        if (bt.val != null) {
+            arbol += inOrder(bt.left);
+            arbol += bt.value();
+            arbol += inOrder(bt.right);
         }
+        return arbol;
     }
 
-    public String buscar(String ingles) {
+    public String buscar(String pIngles) {
+        pIngles = pIngles.toLowerCase();
 
+        if (this.val == null) {
+            return null;
+        } else if (((Association) this.val).key.toString().equals(pIngles)) {
+            return (String) ((Association) this.val).value;
+        } else if (((Association) this.val).key.toString().compareTo(pIngles) > 0) {
+            return this.left.buscar(pIngles);
+        } else if (((Association) this.val).key.toString().compareTo(pIngles) < 0) {
+            return this.right.buscar((pIngles));
+        }
         return null;
+
     }
 
 }

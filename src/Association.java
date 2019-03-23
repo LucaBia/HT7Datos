@@ -9,6 +9,6 @@ public class Association <K, V> {
 
     @Override
     public String toString() {
-        return "Nodo: " + this.key + " " + this.value;
+        return "(" + this.key + ", " + this.value + ") ";
     }
 }

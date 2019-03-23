@@ -48,7 +48,8 @@ public class Main {
 
         //IMPRIMIR IN ORDER
         System.out.println();
-        diccionarioBTraiz.inOrder(diccionarioBTraiz);
+//        diccionarioBTraiz.inOrder(diccionarioBTraiz);
+        System.out.println(diccionarioBTraiz.inOrder(diccionarioBTraiz));
 
         //TRADUCCION DE ARCHIVO
 
